@@ -1,0 +1,23 @@
+{{define "title"}}Saved Comments{{end}}
+
+{{define "main"}}
+<section class="section">
+<div class="container">
+  {{if .Comments}}
+  {{range .Comments}}
+  <div class="comment is-flex-direction-column">
+    <p>Likes: {{.Likes}}</p>
+    <p><a href="/comments/{{.ID}}">Source</a></p>
+    <p><a href="/users/profile/{{.UserID}}">Created by: {{.Username}}</a></p>
+    <p><a href="/posts/{{.PostID}}">Post</a></p>
+    <p>Created: {{formatDate .Created}}</p>
+    <p>Updated: {{formatDate .LastUpdated}}</p>
+    <p>{{.Content}}</p>
+  </div>
+  {{end}}
+  {{else}}
+    <p>You haven't saved any comments yet!</p>
+  {{end}}
+</div>
+</section>
+{{end}}

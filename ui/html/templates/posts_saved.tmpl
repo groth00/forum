@@ -1,0 +1,25 @@
+{{define "title"}}Saved Posts{{end}}
+
+{{define "main"}}
+<section class="section">
+<div class="container">
+  {{if .Posts}}
+  {{range .Posts}}
+  <div class="comment is-flex-direction-column">
+    <p>Likes: {{.Likes}}</p>
+    <p><a href="/posts/{{.ID}}">Post</a></p>
+    <p><a href="/topics/{{.TopicID}}">Topic</a></p>
+    <p><a href="/users/profile/{{.UserID}}">Created by: {{.Username}}</a></p>
+    <p>Created: {{formatDate .Created}}</p>
+    <p>Updated: {{formatDate .LastUpdated}}</p>
+    <p>Comments : {{.NumComments}}</p>
+    <p>{{.Title}}</p>
+    <p>{{.Content}}</p>
+  </div>
+  {{end}}
+  {{else}}
+    <p>You haven't saved any posts yet!</p>
+  {{end}}
+</div>
+</section>
+{{end}}

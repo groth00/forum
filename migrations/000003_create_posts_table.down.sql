@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS posts_saved;
+DROP TABLE IF EXISTS posts_liked;
+DROP TABLE IF EXISTS posts;

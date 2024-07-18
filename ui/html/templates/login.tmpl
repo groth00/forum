@@ -1,0 +1,60 @@
+{{define "title"}}Login{{end}}
+
+{{define "nav"}}
+<nav class="navbar" role="navigation">
+  <div class="navbar-menu">
+    <div class="navbar-start">
+    <a class="navbar-item" href="/">Home</a>
+    </div>
+  </div>
+
+  <div class="navbar-end">
+    <div class="buttons">
+      <a class="button" href="/users/register">Register</a>
+    </div>
+  </div>
+
+</nav>
+{{end}}
+
+{{define "main"}}
+<h1 class="has-text-centered title">Gorum</h1>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <form action="/users/login" method="POST" novalidate>
+      <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input" type="email" name="email" value="{{.Form.Email}}">
+        </div>
+        {{with .Form.FieldErrors.email}}
+          <p class="help is-danger">{{.}}</p>
+        {{end}}
+      </div>
+
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input class="input" type="password" name="password">
+        </div>
+        {{with .Form.FieldErrors.password}}
+          <p class="help is-danger">{{.}}</p>
+        {{end}}
+        {{range .Form.NonFieldErrors}}
+          <p class="help is-danger">{{.}}</p>
+        {{end}}
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-link">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</section>
+{{end}}

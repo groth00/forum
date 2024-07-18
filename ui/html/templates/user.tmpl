@@ -1,0 +1,18 @@
+{{define "title"}}User Info{{end}}
+
+{{define "main"}}
+<section class="section">
+<div class="container">
+  {{with .User}}
+    <p>{{.Name}}</p>
+    <p>Joined: {{.Created}}</p>
+    {{if .Admin}}
+      <p>Administrator</p>
+    {{end}}
+    <p>TODO: Recent Posts and Comments</p>
+    <p>TODO: Subscriptions</p>
+    <p>TOOD: Total Likes, Number of Posts and Comments</p>
+  {{end}}
+</div>
+</section>
+{{end}}

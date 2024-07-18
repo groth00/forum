@@ -1,0 +1,70 @@
+{{define "title"}}Post {{.Post.ID}}{{end}}
+
+{{define "main"}}
+<section class="section">
+  <div class="container">
+    <div class="post">
+      <h1 class="title has-text-centered">{{.Post.Title}}</h1>
+      <h2 class="subtitle">{{.Post.Content}}</h2>
+      <p>
+        Likes: {{.Post.Likes}}
+        <a hx-post="/posts/like/{{.Post.ID}}" hx-swap="none">Like</a>
+        <a hx-post="/posts/dislike/{{.Post.ID}}" hx-swap="none">Dislike</a>
+        <a hx-post="/posts/save/{{.Post.ID}}" hx-swap="none">Save</a>
+      </p>
+
+      {{if .IsAuthenticated}}
+      <form id="submitComment" action="/comments" method="POST" name="submitComment" novalidate>
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        <input form="submitComment" type="hidden" name="post_id" value="{{.Post.ID}}">
+        <textarea form="submitComment" class="textarea is-info" type="textarea" name="content"></textarea>
+        <button form="submitComment" class="button">Submit</button>
+      </form>
+      {{end}}
+
+      {{if .CommentNodes}}
+      <section class="section">
+      {{template "comment" varargs .CommentNodes .CSRFToken}}
+      </section>
+      {{end}}
+    </div>
+  </div>
+</section>
+{{end}}
+
+{{define "comment"}}
+  {{$commentNodes := index . 0}}
+  {{$csrfToken := index . 1}}
+  {{range $commentNodes}}
+  <div class="content" style="border-top: 1px inset black; padding: 0 0 5px 0; margin: 0 0 0 {{setCommentMargin .PathLength}}px">
+    <p onclick=hide(event) style="float:left; clear:left; margin: 0 10px 0 0">-</p>
+    <div>
+      <p>
+        Likes: {{.Likes}}
+        <a href="/users/{{.UserID}}">{{.Username}}</a>
+        Created: {{formatDate .Created}}
+        Updated: {{formatDate .LastUpdated}}
+      </p>
+      <p>{{.Content}}</p>
+
+      <a hx-post="/comments/like/{{.ID}}" hx-swap="none">Like</a>
+      <a hx-post="/comments/dislike/{{.ID}}" hx-swap="none">Dislike</a>
+      <a hx-post="/comments/save/{{.ID}}" hx-swap="none">Save</a>
+      <a onclick=hide(event)>Reply</a>
+      <div hidden>
+        <form action="/comments" method="POST" novalidate>
+          <input type="hidden" name="csrf_token" value="{{$csrfToken}}">
+          <input type="hidden" name="parent_id" value={{.Ancestor}}>
+          <input type="hidden" name="post_id" value={{.PostID}}>
+          <textarea class="textarea is-info" type="textarea" name="content"></textarea>
+          <button class="button">Submit</button>
+        </form>
+      </div>
+
+      {{if .CommentNodes}}
+      {{template "comment" varargs .CommentNodes $csrfToken}}
+      {{end}}
+    </div>
+  </div>
+  {{end}}
+{{end}}

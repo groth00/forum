@@ -1,0 +1,32 @@
+{{define "nav"}}
+<nav class="navbar" role="navigation">
+  <div class="navbar-menu">
+    <div class="navbar-start">
+    <a class="navbar-item" href="/">Home</a>
+    <a class="navbar-item" href="/users/saved/posts">Saved Posts</a>
+    <a class="navbar-item" href="/users/liked/posts">Liked Posts</a>
+    <a class="navbar-item" href="/users/saved/comments">Saved Comments</a>
+    <a class="navbar-item" href="/users/liked/comments">Liked Comments</a>
+    </div>
+  </div>
+
+  <div class="navbar-end">
+    {{if .IsAuthenticated}}
+      <div class="buttons">
+        <a class="button" href="/new">Create Post</a>
+        <a class="button" href="/users/settings">Settings</a>
+        <form action="/users/logout" method="POST">
+          <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+          <button class="button">Logout</button>
+        </form>
+      </div>
+    {{else}}
+      <div class="buttons">
+        <a class="button" href="/users/register">Register</a>
+        <a class="button" href="/users/login">Login</a>
+      </div>
+    {{end}}
+  </div>
+
+</nav>
+{{end}}

@@ -1,0 +1,35 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/bulma-no-dark-mode.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/static/js/htmx.min.js"></script>
+    <script src="/static/js/submitComment.js"></script>
+    <title>{{template "title" .}}</title>
+  </head>
+  <body class="Site"> 
+    {{template "nav" .}}
+    <main class="Site-content">
+      {{with .Flash}}
+        <div class="has-text-centered">{{.}}</div>
+      {{end}}
+
+      <aside style="float: right">
+        {{template "aside" .}}
+      </aside>
+
+      {{template "main" .}}
+    </main>
+
+    <footer>
+      <div class="content has-text-centered pb-3">
+        Made with <a href="https://golang.org">Go</a> in {{.CurrentYear}}
+      </div>
+    </footer>
+  </body>
+</html>
+{{end}}

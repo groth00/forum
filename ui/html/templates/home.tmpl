@@ -1,0 +1,37 @@
+{{define "title"}}Home{{end}}
+{{define "main"}}
+<h1 class="has-text-centered title">Topics</h1>
+{{if .Topics}}
+  <section class="section">
+  <div class="container">
+
+    <table class="table mx-auto is-striped is-hoverable is-fullwidth">
+      <thead>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Posts</th>
+        <th>Subscribers</th>
+      </thead>
+
+      <tbody>
+      {{range .Topics}}
+      <tr>
+        <td><a href="/topics/{{.ID}}">{{.Name}}</a></td>
+        <td>{{formatDate .CreatedAt}}</td>
+        <td>{{.NumPosts}}</td>
+        <td>{{.NumSubscribers}}</td>
+      </tr>
+      {{end}}
+      </tbody>
+
+    </table>
+
+  </div>
+  </section>
+{{else}}
+  <section class="section">
+    <p class="has-text-centered">There's nothing to see here yet.</p>
+  </section>
+{{end}}
+
+{{end}}

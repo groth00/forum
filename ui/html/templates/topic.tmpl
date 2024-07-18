@@ -1,0 +1,43 @@
+{{define "title"}}{{.Topic.Name}}{{end}}
+
+{{define "aside"}}
+  <a hx-post="/topics/subscribe/{{.Topic.ID}}" hx-swap="none">Subscribe</a>
+  <a hx-post="/topics/unsubscribe/{{.Topic.ID}}" hx-swap="none">Unsubscribe</a>
+{{end}}
+
+{{define "main"}}
+
+{{if .Posts}}
+  <section class="section">
+  <div class="container">
+    <table class="table mx-auto is-striped is-hoverable is-fullwidth">
+      <thead>
+        <th>Likes</th>
+        <th>Title</th>
+        <th>Username</th>
+        <th>Created</th>
+        <th>Updated</th>
+      </thead>
+
+      <tbody>
+      {{range .Posts}}
+      <tr>
+        <td>{{.Likes}}</th>
+        <td><a href="/posts/{{.ID}}">{{.Title}}</a></td>
+        <td><a href="/users/profile/{{.UserID}}">{{.Username}}</a></td>
+        <td>{{formatDate .Created}}</td>
+        <td>{{formatDate .LastUpdated}}</td>
+      </tr>
+      {{end}}
+      </tbody>
+    </table>
+  </div>
+  </section>
+
+{{else}}
+  <section class="section">
+    <p class="has-text-centered">There's no posts in this topic yet!</p>
+  </section>
+{{end}}
+
+{{end}}
